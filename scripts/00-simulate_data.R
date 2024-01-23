@@ -4,11 +4,12 @@
 # Date: 22 January 2024
 # Contact: hadiq.ahmad@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
+# Pre-requisites: Know where to get Toronto open data
 # Any other information needed? The 25 ward model was used for this script 
 #                               instead of the newer 44 ward model
 
 #### Workspace setup ####
+# install.packages("tidyverse")
 library(tidyverse)
 
 #### Simulate data ####
