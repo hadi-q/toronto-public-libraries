@@ -1,10 +1,9 @@
 ---
-title: "My title"
+title: "Mapping Toronto's Libraries"
 subtitle: "My subtitle if needed"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Hadi Ahmad
+thanks: "Code and data are available at: https://github.com/hadi-q/toronto-public-libraries."
 date: today
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."

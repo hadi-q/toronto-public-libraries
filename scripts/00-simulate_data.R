@@ -1,12 +1,10 @@
 #### Preamble ####
-# Purpose: Simulates the ward corresponding to each branch of the Toronto Public Library
+# Purpose: Simulates the neighbourhood corresponding to each branch of the Toronto Public Library
 # Author: Hadi Ahmad
-# Date: 22 January 2024
+# Date: 24 January 2024
 # Contact: hadiq.ahmad@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: Know where to get Toronto open data
-# Any other information needed? The 25 ward model was used for this script 
-#                               instead of the older 44 ward model
 
 #### Workspace setup ####
 # install.packages("tidyverse")
