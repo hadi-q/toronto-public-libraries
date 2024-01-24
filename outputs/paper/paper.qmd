@@ -9,6 +9,7 @@ date: today
 date-format: "D MMMM YYYY"
 abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, [TO DO]."
 format: pdf
+toc: true
 number-sections: true
 bibliography: references.bib
 ---
@@ -18,13 +19,13 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
-install.packages("tidyverse")
-install.packages("knitr")
-install.packages("opendatatoronto")
-install.packages("dplyr")
-install.packages("readr")
-install.packages("kableExtra")
-install.packages("here")
+# install.packages("tidyverse")
+# install.packages("knitr")
+# install.packages("opendatatoronto")
+# install.packages("dplyr")
+# install.packages("readr")
+# install.packages("kableExtra")
+# install.packages("here")
 library(tidyverse)
 library(knitr)
 library(opendatatoronto)
@@ -36,7 +37,7 @@ library(here)
 #### Read in cleaned data ####
 
 analysis_data = read_csv(
-  file = here("inputs/data/analysis_data.csv"),
+  file = here("outputs/data/analysis_data.csv"),
   show_col_types = FALSE
 )
 ```
@@ -52,45 +53,61 @@ In October 2023, the Toronto Public Library was victim to a major cybersecurity 
 
 This paper aims to analyze the distribution of Toronto Public Library branches across the 25 wards of Toronto. The distribution of branches will be viewed in two ways: number of branches and square feet of branch space within a given ward. The resulting analyses will determine if certain wards are over- or underrepresented in terms of the quantity and area of library branches. Future analyses may explore demographic factors to determine if libraries are disproportionately located in neighbourhoods of higher or lower income, to get a sense of equality of access to libraries.
 
-The remainder of this paper is structured as follows. @sec-data....
+The remainder of this paper is structured as follows. @sec-data 
 
 # Data {#sec-data}
 
-All relevant data was sourced from the Open Data Toronto portal, and extracted using the [@opendatatoronto] library for R. In particular, one dataset was used for the graphs and analyses in this paper
+All relevant data was sourced from the Open Data Toronto portal, and extracted using the opendatatoronto library for R [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper [TO DO]
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: library-branches
+#| fig-cap: Sample of dataset
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+# analysis_data |>
+#   kable(col.names = c("Branch", "Square Footage", "Ward Number", "Ward Name", "Year Built"),
+#     digits = 2)
+
+kable(
+  analysis_data,
+  'latex',
+  digits = getOption("digits"),
+  row.names = NA,
+  col.names = NA,
+  align = "c",
+  caption = NULL,
+  label = NULL,
+  format.args = list(),
+  escape = TRUE
+)
+# ggplot(penguins, aes(x = island, fill = species)) +
+#   geom_bar(alpha = 0.8) +
+#   scale_fill_manual(values = c("darkorange","purple","cyan4"),
+#                     guide = "none") +
+#   theme_minimal() +
+#   facet_wrap(~species, ncol = 1) +
+#   coord_flip()
 ```
 
 Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+And also planes (fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
 ```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
-#| warning: false
-#| message: false
+# label: fig-planes
+# fig-cap: Relationship between wing length and width
+# echo: false
+# warning: false
+# message: false
 
-analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
+# analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
+# analysis_data |> 
+#   ggplot(aes(x = width, y = length)) +
+#   geom_point(alpha = 0.8) +
+#   theme_minimal() +
+#   labs(x = "Wing width (mm)",
+#        y = "Wing length (mm)")
 ```
 
 Talk way more about it. 
@@ -101,7 +118,7 @@ Talk way more about it.
 
 The goal of our modelling strategy is twofold. Firstly,...
 
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
+Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -sec-model-details].
 
 ## Model set-up
 
@@ -128,34 +145,34 @@ We can use maths by including latex between dollar signs, for instance $\theta$.
 
 # Results
 
-Our results are summarized in @tbl-modelresults.
+Our results are summarized in tbl-modelresults.
 
 ```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
+# echo: false
+# eval: true
+# warning: false
+# message: false
 
-library(rstanarm)
+# library(rstanarm)
 
-first_model <-
-  readRDS(file = here::here("outputs/models/first_model.rds"))
+# first_model <-
+#   readRDS(file = here::here("outputs/models/first_model.rds"))
 ```
 
 ```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
+# echo: false
+# eval: true
+# label: tbl-modelresults
+# tbl-cap: "Explanatory models of flight time based on wing width and wing length"
+# warning: false
 
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+# modelsummary::modelsummary(
+#   list(
+#     "First model" = first_model
+#   ),
+#   statistic = "mad",
+#   fmt = 2
+# )
 ```
 
 
@@ -188,59 +205,58 @@ Weaknesses and next steps should also be included.
 
 ## Posterior predictive check
 
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
+In fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
 
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
+In fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
 
 ```{r}
-#| eval: true
+# eval: true
 #| echo: false
 #| message: false
 #| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
+# label: fig-ppcheckandposteriorvsprior
+# layout-ncol: 2
+# fig-cap: "Examining how the model fits, and is affected by, the data"
+# fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
 
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
+# pp_check(first_model) +
+#   theme_classic() +
+#   theme(legend.position = "bottom")
 
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
+# posterior_vs_prior(first_model) +
+#   theme_minimal() +
+#   scale_color_brewer(palette = "Set1") +
+#   theme(legend.position = "bottom") +
+#   coord_flip()
 ```
 
 ## Diagnostics
 
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
+# fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
 
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
+# fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
 
 ```{r}
 #| echo: false
 #| eval: true
 #| message: false
 #| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
+# label: fig-stanareyouokay
+# fig-cap: "Checking the convergence of the MCMC algorithm"
+# fig-subcap: ["Trace plot", "Rhat plot"]
+# layout-ncol: 2
 
-plot(first_model, "trace")
+# plot(first_model, "trace")
 
-plot(first_model, "rhat")
+# plot(first_model, "rhat")
 ```
 
 
 
 \newpage
 
-
-# References
-
 # LLMs
 
 Statement on LLM usage: no LLMs were used in the making of this paper.
+
+# References
