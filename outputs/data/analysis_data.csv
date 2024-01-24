@@ -1,4 +1,4 @@
-Branch,Square Footage,Ward Number,Ward Name,Year Built
+branch_name,square_footage,ward_no,ward_name,present_site_year
 Albion,29000,1,Etobicoke North,2017
 Albert Campbell,28957,20,Scarborough Southwest,1971
 Alderwood,7341,3,Etobicoke-Lakeshore,1999

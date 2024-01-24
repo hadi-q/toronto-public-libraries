@@ -57,8 +57,13 @@ The remainder of this paper is structured as follows. @sec-data
 
 # Data {#sec-data}
 
-All relevant data was sourced from the Open Data Toronto portal, and extracted using the opendatatoronto library for R [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper [TO DO]
+All relevant data was sourced from the Open Data Toronto portal, and extracted using the opendatatoronto library for R [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper, which included information about all Toronto Public Library branches, their addresses, phone numbers, square footage, year of construction of the building, among other variables like whether there as a park adjacent to the library, if adult literacy classes are available, and GPS coordinates of the building.
 
+The data was generated, extracted, and cleaned using R [@r], leveraging functions from tidyverse [@rTidyverse], ggplot2 [@rGgplot2], dplyr [@rDplyr], readr [@rReadr], tibble [@rTibble], janitor [@rJanitor], kableExtra [@rKableExtra], naniar [@rNaniar] and knitr [@rKnitr].
+
+The selected dataset was published by the Toronto Public Library to share information on libraries located in its network, and was last updated on 29 June, 2023 in accordance with its annual updating guideline. The chosen variables of analysis were the branch name, the square footage of the library,	the ward number and	ward name of where the library is located, and the year of construction of the site.
+
+(Table commented out due to unresolved errors that prevent rendering)
 ```{r}
 #| label: library-branches
 #| fig-cap: Sample of dataset
@@ -68,51 +73,19 @@ All relevant data was sourced from the Open Data Toronto portal, and extracted u
 #   kable(col.names = c("Branch", "Square Footage", "Ward Number", "Ward Name", "Year Built"),
 #     digits = 2)
 
-kable(
-  analysis_data,
-  'latex',
-  digits = getOption("digits"),
-  row.names = NA,
-  col.names = NA,
-  align = "c",
-  caption = NULL,
-  label = NULL,
-  format.args = list(),
-  escape = TRUE
-)
-# ggplot(penguins, aes(x = island, fill = species)) +
-#   geom_bar(alpha = 0.8) +
-#   scale_fill_manual(values = c("darkorange","purple","cyan4"),
-#                     guide = "none") +
-#   theme_minimal() +
-#   facet_wrap(~species, ncol = 1) +
-#   coord_flip()
+# make column names syntactically valid; copied from https://stackoverflow.com/questions/12985653/what-does-length-of-dimnames-1-not-equal-to-array-extent-mean
+# analysis_data <- make.names(analysis_data)
+# copied from https://github.com/EthanSansom/torontocitytrees/blob/main/outputs/paper/paper.Rmd
+# error: Error in dimnames(x) <- dn : 
+#  length of 'dimnames' [2] not equal to array extent
+# see here: https://stackoverflow.com/questions/12985653/what-does-length-of-dimnames-1-not-equal-to-array-extent-mean
+
+# head(analysis_data, 12) |>
+#   kable(
+#     col.names = c("Branch", "Square Footage", "Ward Number", "Ward Name", "Year Built"),
+#     booktabs = TRUE
+#   )
 ```
-
-Talk more about it.
-
-And also planes (fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-# label: fig-planes
-# fig-cap: Relationship between wing length and width
-# echo: false
-# warning: false
-# message: false
-
-# analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
-
-# analysis_data |> 
-#   ggplot(aes(x = width, y = length)) +
-#   geom_point(alpha = 0.8) +
-#   theme_minimal() +
-#   labs(x = "Wing width (mm)",
-#        y = "Wing length (mm)")
-```
-
-Talk way more about it. 
-
-
 
 # Model
 
@@ -123,18 +96,6 @@ Here we briefly describe the Bayesian analysis model used to investigate... Back
 ## Model set-up
 
 Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
 
 ### Model justification
 

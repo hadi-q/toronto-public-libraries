@@ -30,16 +30,19 @@ library_clean_data <-
   select(
     branch_name, square_footage, ward_no, ward_name, present_site_year
   )
+
+# may be causing issues with kable() while rendering
+
 # Rename columns
-library_clean_data <-
-  library_clean_data |>
-  rename(
-    "Branch" = branch_name,
-    "Square Footage" = square_footage,
-    "Ward Number" = ward_no,
-    "Ward Name" = ward_name,
-    "Year Built" = present_site_year
-  )
+# library_clean_data <-
+#   library_clean_data |>
+#   rename(
+#     "Branch" = branch_name,
+#     "Square Footage" = square_footage,
+#     "Ward Number" = ward_no,
+#     "Ward Name" = ward_name,
+#     "Year Built" = present_site_year
+#   )
 library_clean_data
 # Test cases
 
