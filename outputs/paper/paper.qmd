@@ -54,11 +54,9 @@ This paper aims to analyze the distribution of Toronto Public Library branches a
 
 The remainder of this paper is structured as follows. @sec-data....
 
-
-
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+All relevant data was sourced from the Open Data Toronto portal, and extracted using the [@opendatatoronto] library for R. In particular, one dataset was used for the graphs and analyses in this paper
 
 ```{r}
 #| label: fig-bills
@@ -243,4 +241,6 @@ plot(first_model, "rhat")
 
 # References
 
+# LLMs
 
+Statement on LLM usage: no LLMs were used in the making of this paper.
