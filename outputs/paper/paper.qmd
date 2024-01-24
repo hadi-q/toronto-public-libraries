@@ -6,7 +6,7 @@ author: Hadi Ahmad
 thanks: "Code and data are available at: https://github.com/hadi-q/toronto-public-libraries."
 date: today
 date-format: "D MMMM YYYY"
-abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, [TO DO]."
+abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, (TO DO - KEY FINDINGS). These findings are relevant because they can help ascertain how accessible libraries are to residents of Toronto."
 format: pdf
 toc: true
 number-sections: true
@@ -19,18 +19,21 @@ bibliography: references.bib
 #| message: false
 
 # install.packages("tidyverse")
-# install.packages("knitr")
-# install.packages("opendatatoronto")
+# install.packages("ggplot2")
 # install.packages("dplyr")
 # install.packages("readr")
-# install.packages("kableExtra")
+# install.packages("janitor")
+# install.packages("opendatatoronto")
+# install.packages("knitr")
 # install.packages("here")
+
 library(tidyverse)
-library(knitr)
-library(opendatatoronto)
+library(ggplot2)
 library(dplyr)
 library(readr)
-library(kableExtra)
+library(janitor)
+library(opendatatoronto)
+library(knitr)
 library(here)
 
 #### Read in cleaned data ####
@@ -41,7 +44,6 @@ analysis_data = read_csv(
 )
 ```
 
-
 # Introduction
 
 Libraries are a critical form of social infrastructure in modern society. They serve many functions, ranging from providing access to books and WiFi, to programs on self-improvement, to providing places of shelter to study or work. More importantly, however, they offer most or all of this functionality for free. Thus, libraries are not just places for any specific demographic: they act as third spaces, allowing users of different ages, ethnicities, and backgrounds to all exist in the same space. In a society where most services are monetized or paid, libraries remain a vestige of a more egalitarian era. 
@@ -50,42 +52,38 @@ The Toronto Public Library in particular excels in these functions due to its si
 
 In October 2023, the Toronto Public Library was victim to a major cybersecurity attack that took down their website and online systems. This incident also led to some user data being compromised to hackers. As of January 2024, their website services remain offline. This prevents users from being able to borrow or renew books online, create or renew a library card, or access many of Toronto Public Library's services. As a result, physical proximity to a library branch has become more important than ever before, as it remains the only way to borrow books or access other library services until full services are restored.
 
-This paper aims to analyze the distribution of Toronto Public Library branches across the 25 wards of Toronto. The distribution of branches will be viewed in two ways: number of branches and square feet of branch space within a given ward. The resulting analyses will determine if certain wards are over- or underrepresented in terms of the quantity and area of library branches. Future analyses may explore demographic factors to determine if libraries are disproportionately located in neighbourhoods of higher or lower income, to get a sense of equality of access to libraries.
+This paper aims to analyze the distribution of Toronto Public Library branches across the 25 wards of Toronto. The distribution of branches will be viewed in two ways: number of branches and square feet of branch space within a given ward. The resulting analyses will determine if certain wards are over- or underrepresented in terms of the quantity and size of library branches, which could provide cursory information on where future libraries could be built or current libraries that could benefit from expansion. Future analyses may explore demographic factors to determine if libraries are disproportionately located in neighbourhoods of higher or lower income, to get a sense of equality of access to libraries.
 
-The remainder of this paper is structured as follows. @sec-data 
+The remainder of this paper is structured as follows. (TO DO) 
 
 # Data {#sec-data}
 
 All relevant data was sourced from the Open Data Toronto portal, and extracted using the `opendatatoronto` library for `R` [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper, which included information about all Toronto Public Library branches, their addresses, phone numbers, square footage, year of construction of the building, among other variables like whether there as a park adjacent to the library, if adult literacy classes are available, and GPS coordinates of the building.
 
-The data was generated, extracted, and cleaned using `R` [@citeR], leveraging functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `janitor` [@rJanitor], `kableExtra` [@rKableExtra], `opendatatoronto` [@rOpendatatoronto], and `knitr` [@rKnitr].
+The data was generated, extracted, and cleaned using `R` [@citeR], leveraging functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `janitor` [@rJanitor], `opendatatoronto` [@rOpendatatoronto], `knitr` [@rKnitr], and `here` [@rHere].
 
 The selected dataset was published by the Toronto Public Library to share information on libraries located in its network, and was last updated on 29 June, 2023 in accordance with its annual updating guideline. The chosen variables of analysis were the branch name, the square footage of the library,	the ward number and	ward name of where the library is located, and the year of construction of the site.
 
 ```{r}
 #| label: library-branches
-#| fig-cap: Sample of dataset
+#| fig-cap: "Table 1: Sample of Toronto Public Library Data"
 #| echo: false
 
-knitr::kable(head(analysis_data[, 1:5]), "simple")
+# Col names code copied from https://bookdown.org/yihui/rmarkdown-cookbook/kable.html
+knitr::kable(head(analysis_data[, 1:5]), "simple",   col.names = c('Branch', 'Square Footage', 'Ward Number', 'Ward Name', 'Year Built'))
 
-# make column names syntactically valid; copied from https://stackoverflow.com/questions/12985653/what-does-length-of-dimnames-1-not-equal-to-array-extent-mean
-# analysis_data <- make.names(analysis_data)
-# copied from https://github.com/EthanSansom/torontocitytrees/blob/main/outputs/paper/paper.Rmd
-# error: Error in dimnames(x) <- dn : 
-#  length of 'dimnames' [2] not equal to array extent
-# see here: https://stackoverflow.com/questions/12985653/what-does-length-of-dimnames-1-not-equal-to-array-extent-mean
+```
 
-# head(analysis_data, 12) |>
-#   kable(
-#     col.names = c("Branch", "Square Footage", "Ward Number", "Ward Name", "Year Built"),
-#     booktabs = TRUE
-#   )
+```{r}
+
+analysis_data |>
+  count(ward_name)
+
 ```
 
 # Results
 
-No results were found due to persistent errors in executing any code with R.
+
 
 \newpage
 
