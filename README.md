@@ -10,15 +10,15 @@ The repo is structured as:
 
 -   `input/data` contains the data sources used in analysis including the raw data.
 -   `outputs/data` contains the cleaned dataset that was constructed.
--   `outputs/paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
--   `scripts` contains the R scripts used to simulate, download, and clean data.
+-   `outputs/paper` contains the files used to generate the paper, including the `Quarto` document and reference bibliography file, as well as the PDF of the paper. 
+-   `scripts` contains the `R` scripts used to simulate, download, and clean data.
 
 ## How to Run
 
 - Run scripts/00-simulate_data.R to simulate envisioned data
 - Run scripts/01-download_data.R to download raw data from opendatatoronto
 - Run scripts/02-data_cleaning.R to generate cleaned data
-- Run outputs/paper/paper.qmd to generate the PDF of the paper
+- Render outputs/paper/paper.qmd to generate the PDF of the paper
 
 ## LLMs
 

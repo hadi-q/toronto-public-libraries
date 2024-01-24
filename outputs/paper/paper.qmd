@@ -56,21 +56,18 @@ The remainder of this paper is structured as follows. @sec-data
 
 # Data {#sec-data}
 
-All relevant data was sourced from the Open Data Toronto portal, and extracted using the opendatatoronto library for R [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper, which included information about all Toronto Public Library branches, their addresses, phone numbers, square footage, year of construction of the building, among other variables like whether there as a park adjacent to the library, if adult literacy classes are available, and GPS coordinates of the building.
+All relevant data was sourced from the Open Data Toronto portal, and extracted using the `opendatatoronto` library for `R` [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper, which included information about all Toronto Public Library branches, their addresses, phone numbers, square footage, year of construction of the building, among other variables like whether there as a park adjacent to the library, if adult literacy classes are available, and GPS coordinates of the building.
 
-The data was generated, extracted, and cleaned using R [@citeR], leveraging functions from tidyverse [@rTidyverse], ggplot2 [@rGgplot2], dplyr [@rDplyr], readr [@rReadr], janitor [@rJanitor], kableExtra [@rKableExtra], opendatatoronto [@rOpendatatoronto], and knitr [@rKnitr].
+The data was generated, extracted, and cleaned using `R` [@citeR], leveraging functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `janitor` [@rJanitor], `kableExtra` [@rKableExtra], `opendatatoronto` [@rOpendatatoronto], and `knitr` [@rKnitr].
 
 The selected dataset was published by the Toronto Public Library to share information on libraries located in its network, and was last updated on 29 June, 2023 in accordance with its annual updating guideline. The chosen variables of analysis were the branch name, the square footage of the library,	the ward number and	ward name of where the library is located, and the year of construction of the site.
 
-(Table commented out due to unresolved errors that prevent rendering)
 ```{r}
 #| label: library-branches
 #| fig-cap: Sample of dataset
 #| echo: false
 
-# analysis_data |>
-#   kable(col.names = c("Branch", "Square Footage", "Ward Number", "Ward Name", "Year Built"),
-#     digits = 2)
+knitr::kable(head(analysis_data[, 1:5]), "simple")
 
 # make column names syntactically valid; copied from https://stackoverflow.com/questions/12985653/what-does-length-of-dimnames-1-not-equal-to-array-extent-mean
 # analysis_data <- make.names(analysis_data)
