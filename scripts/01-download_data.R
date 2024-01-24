@@ -21,13 +21,9 @@ package <- show_package("f5aa9b07-da35-45e6-b31f-d6790eb9bd9b")
 
 package
 
-
-
 # get all resources for this package
 
 resources <- list_package_resources("f5aa9b07-da35-45e6-b31f-d6790eb9bd9b")
-
-
 
 # identify datastore resources; by default, Toronto Open Data sets datastore 
 # resource format to CSV for non-geospatial and GeoJSON for geospatial resources
@@ -47,4 +43,6 @@ data
 #### Save data ####
 # [...UPDATE THIS...]
 # change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(the_raw_data, "inputs/data/raw_data.csv") 
+write_csv(data, "inputs/data/raw_data.csv") 
+
+         
