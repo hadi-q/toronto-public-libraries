@@ -15,7 +15,7 @@
 library(opendatatoronto)
 library(tidyverse)
 library(dplyr)
-library(xlsx)      
+# library(xlsx)      
 
 # TORONTO PUBLIC LIBRARY DATA
 # Code copied from https://open.toronto.ca/dataset/library-branch-general-information/

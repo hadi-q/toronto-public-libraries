@@ -1,12 +1,12 @@
 ---
 title: "Mapping Toronto's Libraries"
-subtitle: "My subtitle if needed"
+subtitle: "Are Libraries Distributed Equally Throughout the City?"
 author: 
   - Hadi Ahmad
 thanks: "Code and data are available at: https://github.com/hadi-q/toronto-public-libraries."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, [TO DO]."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -18,7 +18,6 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
 ```
 
 

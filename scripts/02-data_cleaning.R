@@ -24,12 +24,28 @@ library_clean_data <-
   library_clean_data |>
     filter(physical_branch > 0)
 head(library_clean_data)
-
+# Remove physical_branch column
+library_clean_data <-
+  library_clean_data |>
+  select(
+    branch_name, square_footage, ward_no, ward_name, present_site_year
+  )
+# Rename columns
+library_clean_data <-
+  library_clean_data |>
+  rename(
+    "Branch" = branch_name,
+    "Square Footage" = square_footage,
+    "Ward Number" = ward_no,
+    "Ward Name" = ward_name,
+    "Year Built" = present_site_year
+  )
+library_clean_data
 # Test cases
 
 # Ensure that each ward is randomly assigned >1 library branch
 # Wherein false = >1 library branch in this ward
-simulated_data$Ward |>
+library_clean_data$Ward |>
   unique() == c("Beaches-East York", "Davenport", "Don Valley East", 
                 "Don Valley North", "Don Valley West", "Eglinton-Lawrence", 
                 "Etobicoke Centre", "Etobicoke North", "Etobicoke-Lakeshore", 
@@ -41,13 +57,14 @@ simulated_data$Ward |>
                 "Willowdale", "York Centre", "York South-Weston")
 # Ensure that 25 wards are represented
 # Wherein true = 25 unique wards are present in the actual data
-simulated_data$Ward |>
+library_clean_data$Ward |>
   unique() |>
   length() == 25
 
+# Ward data no longer included in dataset
 # WARD DATA
 # read.xlsx() format obtained from https://stackoverflow.com/questions/51930684/read-excel-file-and-select-specific-rows-and-columns
-read.xlsx("inputs/data/wards_raw_data.xlsx", "sheet_name", rowIndex = 5:700, colIndex = 1:10)
+# read.xlsx("inputs/data/wards_raw_data.xlsx", "sheet_name", rowIndex = 5:700, colIndex = 1:10)
 
 #### Save data ####
 write_csv(library_clean_data, "outputs/data/analysis_data.csv")
