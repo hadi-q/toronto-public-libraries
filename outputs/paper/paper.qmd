@@ -1,11 +1,12 @@
 ---
 title: "Mapping Toronto's Libraries"
+title-block-banner: true
 subtitle: "Are Libraries Distributed Equally Throughout the City?"
 author: 
   - Hadi Ahmad
 thanks: "Code and data are available at: https://github.com/hadi-q/toronto-public-libraries."
 date: today
-date-format: long
+date-format: "D MMMM YYYY"
 abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, [TO DO]."
 format: pdf
 number-sections: true
@@ -17,13 +18,39 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
+install.packages("tidyverse")
+install.packages("knitr")
+install.packages("opendatatoronto")
+install.packages("dplyr")
+install.packages("readr")
+install.packages("kableExtra")
+install.packages("here")
 library(tidyverse)
+library(knitr)
+library(opendatatoronto)
+library(dplyr)
+library(readr)
+library(kableExtra)
+library(here)
+
+#### Read in cleaned data ####
+
+analysis_data = read_csv(
+  file = here("inputs/data/analysis_data.csv"),
+  show_col_types = FALSE
+)
 ```
 
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. 
+Libraries are a critical form of social infrastructure in modern society. They serve many functions, ranging from providing access to books and WiFi, to programs on self-improvement, to providing places of shelter to study or work. More importantly, however, they offer most or all of this functionality for free. Thus, libraries are not just places for any specific demographic: they act as third spaces, allowing users of different ages, ethnicities, and backgrounds to all exist in the same space. In a society where most services are monetized or paid, libraries remain a vestige of a more egalitarian era. 
+
+The Toronto Public Library in particular excels in these functions due to its size, cross-branch integration, and volume of services available. With 100 physical branches in its network, users can borrow books from any branch and have it delivered to their home branch. This increases the access to information that Toronto Public Library users benefit from. As well, users can borrow movies, internet hotspot devices, video game consoles, and even get free passes for museums or other attractions. A Toronto Public Library card also gives users access to third party platforms like Libby, OverDrive, Hoopla, and Consumer Reports, providing additional online resources that users can benefit from.
+
+In October 2023, the Toronto Public Library was victim to a major cybersecurity attack that took down their website and online systems. This incident also led to some user data being compromised to hackers. As of January 2024, their website services remain offline. This prevents users from being able to borrow or renew books online, create or renew a library card, or access many of Toronto Public Library's services. As a result, physical proximity to a library branch has become more important than ever before, as it remains the only way to borrow books or access other library services until full services are restored.
+
+This paper aims to analyze the distribution of Toronto Public Library branches across the 25 wards of Toronto. The distribution of branches will be viewed in two ways: number of branches and square feet of branch space within a given ward. The resulting analyses will determine if certain wards are over- or underrepresented in terms of the quantity and area of library branches. Future analyses may explore demographic factors to determine if libraries are disproportionately located in neighbourhoods of higher or lower income, to get a sense of equality of access to libraries.
 
 The remainder of this paper is structured as follows. @sec-data....
 
