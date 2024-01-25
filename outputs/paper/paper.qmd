@@ -26,7 +26,6 @@ bibliography: references.bib
 # install.packages("opendatatoronto")
 # install.packages("knitr")
 # install.packages("here")
-
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
@@ -37,7 +36,6 @@ library(knitr)
 library(here)
 
 #### Read in cleaned data ####
-
 analysis_data = read_csv(
   file = here("outputs/data/analysis_data.csv"),
   show_col_types = FALSE
@@ -60,7 +58,11 @@ The remainder of this paper is structured as follows. (TO DO)
 
 All relevant data was sourced from the Open Data Toronto portal, and extracted using the `opendatatoronto` library for `R` [@rOpendatatoronto]. In particular, one dataset was used for the graphs and analyses in this paper, which included information about all Toronto Public Library branches, their addresses, phone numbers, square footage, year of construction of the building, among other variables like whether there as a park adjacent to the library, if adult literacy classes are available, and GPS coordinates of the building.
 
+## Data Tools
+
 The data was generated, extracted, and cleaned using `R` [@citeR], leveraging functions from `tidyverse` [@rTidyverse], `ggplot2` [@rGgplot2], `dplyr` [@rDplyr], `readr` [@rReadr], `janitor` [@rJanitor], `opendatatoronto` [@rOpendatatoronto], `knitr` [@rKnitr], and `here` [@rHere].
+
+## Overview of Dataset
 
 The selected dataset was published by the Toronto Public Library to share information on libraries located in its network, and was last updated on 29 June, 2023 in accordance with its annual updating guideline. The chosen variables of analysis were the branch name, the square footage of the library,	the ward number and	ward name of where the library is located, and the year of construction of the site.
 

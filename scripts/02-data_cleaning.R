@@ -13,17 +13,20 @@ library(janitor)
 #### Clean data ####
 library_raw_data <- read_csv("inputs/data/library_raw_data.csv")
 library_clean_data <- clean_names(library_raw_data)
+
 # Selected rows needed for analysis
 library_clean_data <-
   library_clean_data |>
     select(
       physical_branch, branch_name, square_footage, ward_no, ward_name, present_site_year
     )
+
 # Get rid of non-physical locations e.g. phone answering line
 library_clean_data <-
   library_clean_data |>
     filter(physical_branch > 0)
 head(library_clean_data)
+
 # Remove physical_branch column
 library_clean_data <-
   library_clean_data |>
@@ -31,18 +34,6 @@ library_clean_data <-
     branch_name, square_footage, ward_no, ward_name, present_site_year
   )
 
-# may be causing issues with kable() while rendering
-
-# Rename columns
-# library_clean_data <-
-#   library_clean_data |>
-#   rename(
-#     "Branch" = branch_name,
-#     "Square Footage" = square_footage,
-#     "Ward Number" = ward_no,
-#     "Ward Name" = ward_name,
-#     "Year Built" = present_site_year
-#   )
 library_clean_data
 # Test cases
 
