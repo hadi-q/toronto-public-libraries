@@ -6,7 +6,8 @@ author: Hadi Ahmad
 thanks: "Code and data are available at: https://github.com/hadi-q/toronto-public-libraries."
 date: today
 date-format: "D MMMM YYYY"
-abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, (TO DO - KEY FINDINGS). These findings are relevant because they can help ascertain how accessible libraries are to residents of Toronto."
+abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, (TO DO - KEY FINDINGS). These findings are relevant because they can help ascertain how accessible libraries are to residents of Toronto, and guide policy decisions on where new locations should be opened."
+
 format: pdf
 toc: true
 number-sections: true
@@ -17,6 +18,10 @@ bibliography: references.bib
 #| include: false
 #| warning: false
 #| message: false
+
+# force graph labels to standard notation
+# copied from https://stackoverflow.com/questions/14563989/force-r-to-stop-plotting-abbreviated-axis-labels-scientific-notation-e-g-1e
+options(scipen=10000)
 
 # install.packages("tidyverse")
 # install.packages("ggplot2")
@@ -52,7 +57,7 @@ In October 2023, the Toronto Public Library was victim to a major cybersecurity 
 
 This paper aims to analyze the distribution of Toronto Public Library branches across the 25 wards of Toronto. The distribution of branches will be viewed in two ways: number of branches and square feet of branch space within a given ward. The resulting analyses will determine if certain wards are over- or underrepresented in terms of the quantity and size of library branches, which could provide cursory information on where future libraries could be built or current libraries that could benefit from expansion. Future analyses may explore demographic factors to determine if libraries are disproportionately located in neighbourhoods of higher or lower income, to get a sense of equality of access to libraries.
 
-The remainder of this paper is structured as follows. (TO DO) 
+The Data @sec-data of this paper explores the `opendatatoronto` data holistically, outlining tools and methods used to analyze the data and some preliminary observations from the data. The Results @sec-results introduces more observations found from the data analysis. The Discussion @sec-disc ties back the findings to its real world relevance. Lastly, the Conclusion @sec-concl summarizes key findings and outlines future areas of study.
 
 # Data {#sec-data}
 
@@ -64,7 +69,7 @@ The data was generated, extracted, and cleaned using `R` [@citeR], leveraging fu
 
 ## Overview of Dataset
 
-The selected dataset was published by the Toronto Public Library to share information on libraries located in its network, and was last updated on 29 June, 2023 in accordance with its annual updating guideline. The chosen variables of analysis were the branch name, the square footage of the library,	the ward number and	ward name of where the library is located, and the year of construction of the site.
+The selected dataset was published by the Toronto Public Library to share information on libraries located in its network, and was last updated on 29 June, 2023 in accordance with its annual updating guideline. The chosen variables of analysis were the branch name, the square footage of the library,	the ward number and	ward name of where the library is located, and the year of construction of the site. See `Table 1` for an overview of the data.
 
 ```{r}
 #| label: library-branches
@@ -76,11 +81,13 @@ knitr::kable(head(analysis_data[, 1:5]), "simple",   col.names = c('Branch', 'Sq
 
 ```
 
-Libraries are present in each of the 25 wards in the city of Toronto. (Note that at the time of the 2018 election, wards were redrawn from 44 wards down to the present 25.) While neighbourhood data is available from the dataset, it is excluded from this analysis, as neighbourhood classifications and counts varied between different `opendatatoronto` datasets.
-
-There is significant range in both the square footage and year of construction of libraries. The smallest library in the dataset, Todmorden Room, measures just 554 square feet, while the largest, the Toronto Reference Library, amounts to over 400,000 square feet. There is also much range in the ages of libraries, with the oldest, the Yorkville branch, having been established in 1907, while the newest, Ethennonnhawahstihnen', was built in 2023.
+Libraries are present in each of the 25 wards in the city of Toronto. (Note that at the time of the 2018 election, wards were redrawn from 44 wards down to the present 25.) While neighbourhood data is available from the dataset, it is excluded from this analysis, as neighbourhood classifications and counts varied between different `opendatatoronto` datasets, and because not all neighbourhoods are listed in this dataset.
 
 The original dataset had entries for codes that did not correspond to physical locations, such as the phone line. These were filtered out, leaving a total of 100 library branches.
+
+## Distribution of Branches Per Ward by Count
+
+On average, there were four library branches per ward. However, in practice, this ranges from one branch in wards like Willowdale, up to seven in branches like Toronto-Danforth. See `Table 2` for a sample of the dataset.
 
 ```{r}
 #| label: library-branches-count
@@ -92,8 +99,9 @@ knitr::kable(head(analysis_data |>
   count(ward_name), 10), "simple",   col.names = c('Ward Name', 'Number of Branches'))
 
 ```
+## Distribution of Branches Per Ward by Square Footage
 
-On average, there were four library branches per ward. However, in practice, this ranges from one branch in wards like Willowdale, up to seven in branches like Toronto-Danforth.
+There is significant range in the square footage of libraries. The smallest library in the dataset, Todmorden Room, measures just 554 square feet, while the largest, the Toronto Reference Library, amounts to over 400,000 square feet. Clearly, both of these branches are outliers from the dataset - the mean square footage of a library branch is 18,129.32 square feet, whereas the median is 8,496.50 square feet. This highlights the need to analyze the distribution of library branches beyond absolute counts, to better understand if library space is evenly allocated across the city. See `Table 3` for a sample of the dataset.
 
 ```{r}
 #| label: library-branches-sq-ft
@@ -107,6 +115,9 @@ knitr::kable(head(analysis_data %>%
 
 ```
 
+## Merged Branch Count and Square Footage
+
+To better understand any links between the number of branches and square footage of library space, the two datasets were merged into a single dataframe using the `merge` function.
 
 ```{r}
 #| include: false
@@ -145,7 +156,9 @@ knitr::kable(
 ```
 
 
-# Results
+# Results {#sec-results}
+
+The distribution of the number of branches per ward range from one branch, in Willowdale, to seven branches, in Toronto-Danforth. Overall, the distribution follows a normal curve, with 10 of the 25 wards falling squarely on the median and mode of having four branches. Only one ward each falls in either upper or lower extremity. See Figure 1 for more details.
 
 ```{r}
 #| label: library-branches-by-ward-count-bar
@@ -177,7 +190,13 @@ ggplot(analysis_data_by_ward_sq_ft, aes(x=reorder(ward_name, Freq), y=Freq)) +
 
 ```
 
-\newpage
+# Discussion {#sec-disc}
+
+
+
+# Conclusion {#sec-concl}
+
+
 
 # LLMs
 
