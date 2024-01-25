@@ -74,16 +74,106 @@ knitr::kable(head(analysis_data[, 1:5]), "simple",   col.names = c('Branch', 'Sq
 
 ```
 
-```{r}
+Libraries are present in each of the 25 wards in the city of Toronto. (Note that at the time of the 2018 election, wards were redrawn from 44 wards down to the present 25.) While neighbourhood data is available from the dataset, it is excluded from this analysis, as neighbourhood classifications and counts varied between different `opendatatoronto` datasets.
 
-analysis_data |>
-  count(ward_name)
+There is significant range in both the square footage and year of construction of libraries. The smallest library in the dataset, Todmorden Room, measures just 554 square feet, while the largest, the Toronto Reference Library, amounts to over 400,000 square feet. There is also much range in the ages of libraries, with the oldest, the Yorkville branch, having been established in 1907, while the newest, Ethennonnhawahstihnen', was built in 2023.
+
+The original dataset had entries for codes that did not correspond to physical locations, such as the phone line. These were filtered out, leaving a total of 100 library branches.
+
+```{r}
+#| label: library-branches-count
+#| fig-cap: "Table 2: Sample of Count of Library Branches by Ward"
+#| echo: false
+#| 
+# output how many libraries per ward
+knitr::kable(head(analysis_data |>
+  count(ward_name), 10), "simple",   col.names = c('Ward Name', 'Number of Branches'))
 
 ```
 
+On average, there were four library branches per ward. However, in practice, this ranges from one branch in wards like Willowdale, up to seven in branches like Toronto-Danforth.
+
+```{r}
+#| label: library-branches-sq-ft
+#| fig-cap: "Table 3: Sample of Total Square Footage of Library Branches by Ward"
+#| echo: false
+
+# output sq ft of libraries per ward
+knitr::kable(head(analysis_data %>%
+  group_by(ward_name) %>%
+  summarize(sum_sq_ft = sum(square_footage, na.rm = FALSE)), 10), "simple",   col.names = c('Ward Name', 'Total Square Footage of Branches'))
+
+```
+
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+# new dataframe with ward name and library count
+analysis_data_by_ward_count <-
+  analysis_data |>
+    count(ward_name)
+
+# new dataframe with ward name and total sq ft
+# code copied from https://www.statology.org/sum-by-group-in-r/
+analysis_data_by_ward_sq_ft <-
+  analysis_data %>%
+  group_by(ward_name) %>%
+  summarize(Freq = sum(square_footage))
+
+# merge dataframes
+# code copied from https://stackoverflow.com/questions/1299871/how-to-join-merge-data-frames-inner-outer-left-right
+analysis_data_by_ward <-
+  merge(analysis_data_by_ward_count, analysis_data_by_ward_sq_ft, by = "ward_name")
+
+```
+
+```{r}
+#| label: library-branches-by-ward-count-and-sq-ft
+#| fig-cap: "Table 4: Count and Total Square Footage of Library Branches by Ward"
+#| echo: false
+# output merged dataframe
+knitr::kable(
+  analysis_data_by_ward,
+  col.names = c('Ward Name', 'Number of Branches', 'Total Square Footage of Branches')
+)
+
+```
+
+
 # Results
 
+```{r}
+#| label: library-branches-by-ward-count-bar
+#| fig-cap: "Library Branches by Ward by Count"
+#| echo: false
+# horizontal bar chart
+# copied from https://stackoverflow.com/questions/10941225/horizontal-barplot-in-ggplot2
+ggplot(analysis_data_by_ward_count, aes(x=reorder(ward_name, n), y=n)) +
+  geom_bar(stat='identity', fill="lightblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Wards", y = "Number of Branches", color = "Country") +
+  scale_color_brewer(palette = "Set1")
 
+```
+
+```{r}
+#| label: library-branches-by-ward-sq-ft-bar
+#| fig-cap: "Library Branches by Ward by Square Footage"
+#| echo: false
+# horizontal bar chart
+# copied from https://stackoverflow.com/questions/10941225/horizontal-barplot-in-ggplot2
+ggplot(analysis_data_by_ward_sq_ft, aes(x=reorder(ward_name, Freq), y=Freq)) +
+  geom_bar(stat='identity', fill="lightblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(x = "Wards", y = "Total Square Footage", color = "Country") +
+  scale_color_brewer(palette = "Set1")
+
+```
 
 \newpage
 
