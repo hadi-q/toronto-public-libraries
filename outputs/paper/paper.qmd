@@ -6,7 +6,7 @@ author: Hadi Ahmad
 thanks: "Code and data are available at: https://github.com/hadi-q/toronto-public-libraries."
 date: today
 date-format: "D MMMM YYYY"
-abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, (TO DO - KEY FINDINGS). These findings are relevant because they can help ascertain how accessible libraries are to residents of Toronto, and guide policy decisions on where new locations should be opened."
+abstract: "This report analyzes the Library Branch General Information dataset, which is made available to the public from Open Data Toronto. It uses the library branches, square footage, and ward information to determine how well libraries are spread across the city. In summary, library facilities are available in every ward, and there is little correlation between the number of branches and space available to users. These findings are relevant because they can help ascertain how accessible libraries are to residents of Toronto, and guide policy decisions on where new locations should be opened."
 
 format: pdf
 toc: true
@@ -155,10 +155,9 @@ knitr::kable(
 
 ```
 
-
 # Results {#sec-results}
 
-The distribution of the number of branches per ward range from one branch, in Willowdale, to seven branches, in Toronto-Danforth. Overall, the distribution follows a normal curve, with 10 of the 25 wards falling squarely on the median and mode of having four branches. Only one ward each falls in either upper or lower extremity. See Figure 1 for more details.
+The distribution of the number of branches per ward range from one branch in Ward 18 (Willowdale), to seven branches in Ward 14 (Toronto-Danforth). Overall, the distribution follows a normal curve, with 10 of the 25 wards falling squarely on the median and mode of having four branches. Only one ward each falls in either upper or lower extremity. See `Figure 1` for more details.
 
 ```{r}
 #| label: library-branches-by-ward-count-bar
@@ -174,6 +173,8 @@ ggplot(analysis_data_by_ward_count, aes(x=reorder(ward_name, n), y=n)) +
   scale_color_brewer(palette = "Set1")
 
 ```
+
+The distribution of square footage of library space tells a different picture. The ward with the greatest amount of library space, Ward 11 (University-Rosedale), is home to six libraries, yet it would still have the most library space even with only one branch: the Toronto Reference Library. Likewise, the second highest ward, Ward 18 (Willowdale), only has one library, yet it too retains a significant amount of library space. A total of 1,812,923 square feet of library space is available across the 100 branches, averaging out to 72,517 square feet per ward. After removing Toronto Reference Library, the mean falls to 54,929 square feet. The median is 44,303 square feet. See `Figure 2` for more details.
 
 ```{r}
 #| label: library-branches-by-ward-sq-ft-bar
@@ -192,10 +193,15 @@ ggplot(analysis_data_by_ward_sq_ft, aes(x=reorder(ward_name, Freq), y=Freq)) +
 
 # Discussion {#sec-disc}
 
+The figures above show that there is some disparity in the distribution of library branches compared to the availability of library space. However, the flatter distribution of library space compared to the number of branches suggests that all wards are served with an adequate amount of library space. It also brings into question, which is a better metric of library accessibility? Merely having more library branches does not guarantee all users will have enough space to use its facilities. But on the other hand, having more space within fewer branches does not assure that all users can reasonably get to the premises. Could wards with fewer library branches have enough space, but still leave residents living further away in food desert style 'library deserts'?
 
+Without access to demographic data, determining the density of library space relative to population density, or proximity of population to libraries, is not possible. However, the results do indicate some overlying trends. For instance, the three wards with the greatest amount of branches all fall squarely on subway lines - Ward 14 (Toronto-Danforth) corresponds to the Toronto Transit Commission's (TTC) Bloor-Danforth subway line, Ward 11 (University-Rosedale) corresponds to the Yonge-University subway line, and Ward 4 (Parkdale-High Park) has its own subway station. This is also demonstrated in terms of square footage of library space - like Ward 11's (University-Rosedale) and Ward 18's (Willowdale) locations along the TTC's Line 1, the third place ward, Ward 17 (Don Valley North), falls along Line 4. This could suggest that the higher density associated with transit corridors correlates to more library branches, but further research is needed to draw conclusions.
+
+One major strength of the Toronto Public Library network is its presence in every ward in the city. Even if this means a single room acting as the library space, in the case of Ward 14's (Toronto-Danforth) Todmorden Room, it provides access to facilities from a larger network nonetheless.
 
 # Conclusion {#sec-concl}
 
+This paper investigates the distribution of library branches and library space within Toronto’s 25 wards to determine if the facilities are distributed equally. It demonstrates that, while there is a large spread of the number of library branches in any single ward, ranging from one to seven, the distribution of library space is less skewed. Further research on demographic factors, like population distribution, density, access to transit, or other factors could better determine the equity of library access across the city.
 
 
 # LLMs
